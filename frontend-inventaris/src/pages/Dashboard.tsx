@@ -7,14 +7,14 @@ import { Product } from "../types/Product";
 export default function Dashboard() {
 const [products, setProducts] = useState<Product[]>([]);
 
-const fetchProducts = async () => {
+const loadProducts = async () => {
     const res = await fetch('http://127.0.0.1:8000/api/products');
     const data = await res.json();
     setProducts(data);
 };
 
 useEffect(() => {
-   fetchProducts();
+   loadProducts();
 
 },[]);
 
