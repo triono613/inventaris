@@ -20,9 +20,9 @@ export default function ProductTable({ products}: Props){
     <table className='table table-bordered mt-4'>
       <thead>
         <tr>
-       <td colSpan={4}>      
+       {/* <td colSpan={4}>      
         <button type="button" className="btn btn-primary" onClick={ handleGoToForm }>tambah Product</button>
-       </td>
+       </td> */}
 
         </tr>
           <tr>

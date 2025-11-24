@@ -11,8 +11,7 @@ function App() {
   <Router>
       <Routes>
         <Route path="/" element={<Dashboard />}  />
-        <Route path="/productForm" element={<ProductForm onCreated={() => {}}  />} />
-         {/* <Route path="/productTable" element={<ProductTable products={[ ]} />}  /> */}
+        <Route path="/products/create" element={<ProductForm  />} />
       </Routes>
     </Router>
   );
