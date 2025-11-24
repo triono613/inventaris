@@ -29,3 +29,10 @@ Cara menjalankan BACKEND :
         "price": "25000"
         }
    6. LIHAT SEMUA PRODUCT : http://127.0.0.1:8000/api/products (metode HTTP GET)
+  
+
+
+Cara menjalankan FRONTEND :
+1. masuk ke folder frontend-inventaris kemudian ketikan 'npm install'
+2. pada file src/components/productForm.tsx , pada "const API_TOKEN = '' " inputkan access_token yang didapat pada endpoint backend http://127.0.0.1:8000/api/login
+3. 
