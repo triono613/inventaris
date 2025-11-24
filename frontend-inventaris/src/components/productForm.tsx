@@ -11,7 +11,7 @@ export default function ProductForm( ) {
  const [error, setError] = useState(null);
  const [success, setSuccess] = useState<string>("");
  const navigate = useNavigate();
- const API_TOKEN = "7|CcBUcve1YgPzgV0rTb6Es1fk4ZQ6DtLeH9mZACelc8ca6224";
+ const API_TOKEN = "1|q6RmdYCKNLdymJwmIs9fUh4S3PGprZqeLbb3pBA65cbb42f7";
  const [formData, setFormData] = useState({
     name: '',
     sku: '',

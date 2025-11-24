@@ -40,17 +40,6 @@ class AuthController extends Controller
 
     $user = User::where("name", $request->name)->first();
  
-
-    //  ob_start(); // Start output buffering
-    // echo "<pre>";print_r($user);
-    // $output = ob_get_clean(); // Get the buffered output
-
-    // dd($user);
-    
-    // return response()->json([
-    //     $request->password,
-    //     $user->password
-    // ]);
     
     if(!$user || !Hash::check($request->password, $user->password)){
         return respnse()->json([
