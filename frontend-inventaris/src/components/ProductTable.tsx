@@ -10,21 +10,11 @@ interface Props {
 export default function ProductTable({ products}: Props){
  const navigate = useNavigate();
 
-  const handleGoToForm = () => {
-    // Perform some logic here if needed
-    navigate('/productForm');
-  };
-
  return (
     
     <table className='table table-bordered mt-4'>
       <thead>
-        <tr>
-       {/* <td colSpan={4}>      
-        <button type="button" className="btn btn-primary" onClick={ handleGoToForm }>tambah Product</button>
-       </td> */}
-
-        </tr>
+  
           <tr>
             <th>Name</th>
             <th>SKU</th>
