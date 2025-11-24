@@ -43,7 +43,8 @@ Cara mendapatkan Key API/Token :
     "name": "admin",
     "password": "123456",
     "role": "user"
-}
+} bila berhasil akan mendapatkan json seperti berikut : <img width="794" height="607" alt="image" src="https://github.com/user-attachments/assets/dda72929-73e1-4163-a923-f6d5be3355ae" />
+
 2. setelah berhasil melakukan register , kemudian login pada endpoint http://127.0.0.1:8000/api/login
    {
     "name" : "admin",
