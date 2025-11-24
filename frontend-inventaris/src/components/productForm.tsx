@@ -2,12 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useCallback, FormEvent } from 'react';
 import axiosClient from "./axios/axiosClient";
-
-
-interface ProductFormProps {
-    onCreated: () => void;
-}
-
+import axios from "axios";
 
 export default function ProductForm( ) {
    const [formData, setFormData] = useState({
@@ -18,7 +13,7 @@ export default function ProductForm( ) {
    });
  
  const [loading, setLoading] = useState(false);
- const [error, setError] = useState<string | null>(null);
+ const [error, setError] = useState(null);
  const [success, setSuccess] = useState<string>("");
  const navigate = useNavigate();
  const API_TOKEN = "7|CcBUcve1YgPzgV0rTb6Es1fk4ZQ6DtLeH9mZACelc8ca6224";
@@ -29,26 +24,17 @@ const handleSubmit =  async (e: FormEvent)  => {
      
       await axiosClient.get("/sanctum/csrf-cookie");
 
-     
-       
-    //  const res = await fetch('http://127.0.0.1:8000/api/products', {
-    //        method: 'POST',
-    //        credentials: "include",
-    //        headers: {
-    //         "content-type" : "application/json",
-    //         // Authorization: `Bearer ${localStorage.getItem('token') || ''}`
-    //         Authorization: 'Bearer' + ' ' + API_TOKEN,
-    //        },
-    //        body: JSON.stringify(formData),
-    //   });
-
-    const res = await axiosClient.post( 'http://localhost:8000/api/products',
-        {
+       const payload = {
           name: formData.name,
           sku: formData.sku,
           quantity: Number(formData.quantity),
           price: Number(formData.price),
-        },
+        };
+
+    try {
+
+    const res = await axiosClient.post( 'http://localhost:8000/api/products',
+        payload,
         {
           headers: {
              Authorization: 'Bearer' + ' ' + API_TOKEN,
@@ -56,17 +42,35 @@ const handleSubmit =  async (e: FormEvent)  => {
         }
       );
 
-      console.log('res= ', res);
-
-      if(res.status === 201){
-        //  setFormData({ name: '', sku: '', quantity: 0, price: 0 });
+       if(res.status === 201){
          setSuccess("data berhasil disimpan");
-      }
+       }
 
        setTimeout(() => {
         navigate('/');
-    }, 1500);
+      }, 1500);
     
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const statusCode = err.response.status;
+          console.log('err.response.data statusCode= ', statusCode)
+          console.log('err.response.data= ',err.response.data.message);
+          setError(err.response.data.message);
+        } else {
+          console.error('Axios error without response:', err.message);
+        }
+      } else {
+        console.error('Unexpected error:', err);
+      }
+
+    } finally {
+        setLoading(false);
+    }
+
+
+
+   
     
     };
   
@@ -86,6 +90,12 @@ const handleSubmit =  async (e: FormEvent)  => {
                 <div className="alert alert-success" role="alert"> { success }</div>
             )
          }
+         {
+             error && (
+                <div className="alert alert-danger" role="alert"> { error }</div>
+            )
+            
+         }
          <form onSubmit={handleSubmit} className="mb-4">
         <div className="mb-3">
             <label className="form-label">Name</label>
@@ -94,7 +104,6 @@ const handleSubmit =  async (e: FormEvent)  => {
                 className="form-control"
                 value={ formData.name }
                 onChange={ (e) => setFormData({ ...formData, name: e.target.value}) }
-                required
                 />
 
         </div>
@@ -105,7 +114,6 @@ const handleSubmit =  async (e: FormEvent)  => {
                 className="form-control"
                 value={ formData.sku }
                 onChange={ (e) => setFormData({ ...formData, sku: e.target.value}) }
-                required
                 />
         </div>
          <div className="mb-3">
@@ -115,7 +123,6 @@ const handleSubmit =  async (e: FormEvent)  => {
                 className="form-control"
                 value={ formData.quantity }
                 onChange={ (e) => setFormData({ ...formData, quantity: Number(e.target.value) }) }
-                required
                 />
         </div>
         <div className="mb-3">
@@ -125,10 +132,10 @@ const handleSubmit =  async (e: FormEvent)  => {
                 className="form-control"
                 value={ formData.price }
                 onChange={ (e) => setFormData({ ...formData, price: Number(e.target.value) }) }
-                required
                 />
         </div>
-        <button className="btn btn-primary" >Simpan </button> &nbsp; 
+        <button className="btn btn-primary" >
+            { loading ? 'Simpan data...' : 'Simpan' } </button> &nbsp; 
          <button onClick={ handleGetBack } className="btn btn-primary" >Kembali </button>
         </form>
         
