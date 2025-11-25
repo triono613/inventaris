@@ -19,7 +19,11 @@ use RefreshDatabase;
     public function it_requires_authentication_to_create_product()
     {
         // Create a user to authenticate
-        $user = User::factory()->create();
+        // $user = User::factory()->create();
+        $user = User::create([
+           'username' => 'testuser',
+           'password' => bcrypt('password'),
+        ]);
 
         // Product data to be sent in the request
         $respose = $this->postJson("/api/products", [
